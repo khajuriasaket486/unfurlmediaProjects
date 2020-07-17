@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cement</title>
+
+    <style>
+        /* The Modal (background) */
+        .modal {
+            /* display: none; */
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(125, 86, 197, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 10px 6px 15px 30px;
+            border: none;
+            width: 42%;
+            border-radius: 8px;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #spancenter {
+            /* text-align: center; */
+            padding-bottom: 0.4%;
+
+        }
+
+        #requirement {
+
+            width: 90%;
+            margin: 2% 20% 1.8% 0;
+            height: 25px;
+
+        }
+
+        #calculate {
+            width: 91.2%;
+            height: 37px;
+            background: #3f3e82;
+            color: #fff;
+            padding: 10px 9px 22px 9px;
+            border-radius: 4px;
+            border: none;
+        }
+
+        #calculate:hover,
+        #calculate:focus {
+            /* color: black; */
+            text-decoration: none;
+            cursor: pointer;
+            background: #161561;
+        }
+
+        #divCalculatedValue li {
+            border-top: 1px solid #ddd;
+            padding: 8px 0;
+            line-height: 22px;
+            font-size: 14px;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+    </style>
+
+
+</head>
+
+
+<body>
+    <!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
+
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="spancenter"><b>Calculate Requirement</b></div>
+            <input placeholder="Enter floor area to be constructed in square feet" type="number" id="requirement">
+            <button class="calculate" id="calculate">Calculate</button>
+            <div id="details">
+            </div>
+
+        </div>
+
+
+        <script>
+
+            var requirement = document.getElementById("requirement")
+            var calculate = document.getElementById("calculate")
+
+            calculate.addEventListener("click", function () {
+                r = requirement.value
+                strn = `
+        <ul id="divCalculatedValue" style="display: block;">
+    <li class="row">
+        <div class="col-sm-4">
+            <b>AAC Block</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lblAacBlock">${(0.03 * r - 0.00465 * r).toFixed(2)} (CBM)</label>
+        </div>
+    </li>
+    <li class="row">
+        <div class="col-sm-4">
+            <b>Block Joining Mortar</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lblBlockJoiningMortar">${0.02 * r} (bags of 40 Kg)</label>
+        </div>
+    </li>
+    <li class="row">
+        <div class="col-sm-4">
+            <b>Tile Adhesive</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lblTileAdhesive">${0.02 * r} (bags of 30 Kg)</label>
+        </div>
+    </li>
+    <li class="row">
+        <div class="col-sm-4">
+            <b>Putty</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lblPutty">${0.01 * r} (bags of 40 Kg)</label>
+        </div>
+    </li>
+    <li class="row">
+        <div class="col-sm-4">
+            <b>Cement</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lblCement">${0.33 * r} bags of Cement (50 Kg each)</label>
+        </div>
+    </li>
+    <li class="row">
+        <div class="col-sm-4">
+            <b>Sand</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lblSand">${1.17 * r} CFT Sand</label>
+        </div>
+    </li>
+    <li class="row">
+        <div class="col-sm-4">
+            <b>10 mm Aggregate</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lbl10mmAggregate">${0.18 * r} CFT Stone Aggregates (10 mm)</label>
+        </div>
+    </li>
+    <li class="row">
+        <div class="col-sm-4">
+            <b>20 mm Aggregate</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lbl20mmAggregate">${0.33 * r} CFT Stone Aggregates (20 mm)</label>
+        </div>
+    </li>
+    <li class="row">
+        <div class="col-sm-4">
+            <b>Steel</b>
+        </div>
+        <div class="col-sm-8">
+            <label id="lblSteel">${0.80 * r} Kg Reinforcement Steel</label>
+        </div>
+    </li>
+</ul>
+`
+                var details = document.getElementById('details')
+                details.innerHTML = strn;
+
+            })
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+
+        </script>
+
+</body>
+
+</html>
